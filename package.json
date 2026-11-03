@@ -1,6 +1,6 @@
 {
   "name": "claude-year-wrapped",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Claude Wrapped: your Claude Code year in review, Spotify-Wrapped style. One command makes a shareable stats card. Runs locally, zero dependencies.",
   "type": "module",
   "bin": {
@@ -14,7 +14,7 @@
   "scripts": {
     "start": "node bin/cli.mjs",
     "demo": "node bin/cli.mjs --demo",
-    "test": "node --test test/*.test.mjs"
+    "test": "node --test"
   },
   "engines": {
     "node": ">=18"
