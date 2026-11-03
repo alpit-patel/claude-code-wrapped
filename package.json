@@ -1,0 +1,16 @@
+{
+  "name": "claude-wrapped",
+  "version": "0.1.0",
+  "description": "Your Claude Code year, Spotify-Wrapped style. Runs 100% locally. Zero dependencies.",
+  "type": "module",
+  "bin": { "claude-wrapped": "bin/cli.mjs" },
+  "files": ["bin", "src", "README.md"],
+  "scripts": {
+    "start": "node bin/cli.mjs",
+    "demo": "node bin/cli.mjs --demo",
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": { "node": ">=18" },
+  "keywords": ["claude", "claude-code", "wrapped", "stats", "ai"],
+  "license": "MIT"
+}
