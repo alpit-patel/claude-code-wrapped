@@ -11,6 +11,8 @@ npx claude-year-wrapped --demo     # preview with fake data
 
 Requires Node 18 or newer. No install, no account, no API key.
 
+If the page opens as code instead of a design, your computer opens `.html` files in a text editor. Open the file from the output path in Chrome, Edge or Safari instead.
+
 ## What you get
 - **Totals:** prompts, sessions, active days, hours with Claude, best streak
 - **Tokens** moved, in "copies of *War and Peace*"

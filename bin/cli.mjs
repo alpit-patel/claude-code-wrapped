@@ -42,6 +42,11 @@ const out = resolve(val('--out', `claude-wrapped-${year}.html`));
 writeFileSync(out, renderHtml(st));
 console.log(`Done. ${st.totals.prompts.toLocaleString()} prompts, ${st.totals.sessions} sessions.\nOpen: ${out}`);
 if (!flag('--no-open')) {
-  const cmd = process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'start ""' : 'xdg-open';
-  exec(`${cmd} "${out}"`, () => {});
+  // Windows can map .html to a text editor, so try Edge (always installed) first, then the default app.
+  if (process.platform === 'win32') {
+    exec(`start "" msedge "${out}"`, (err) => { if (err) exec(`start "" "${out}"`, () => {}); });
+  } else {
+    exec(`${process.platform === 'darwin' ? 'open' : 'xdg-open'} "${out}"`, () => {});
+  }
+  console.log('If it opens as code, open the file in your browser instead.');
 }
