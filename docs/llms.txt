@@ -2,7 +2,7 @@
 
 > Free, open-source CLI that turns your local Claude Code history into a Spotify-Wrapped-style year-in-review story and a shareable PNG card. Runs 100% locally, zero dependencies, MIT licensed.
 
-- Run: `npx claude-wrapped` (Node 18+). Preview with `--demo`. Other year: `--year 2025`.
+- Run: `npx claude-code-wrapped` (Node 18+). Preview with `--demo`. Other year: `--year 2025`.
 - Data source: transcripts in ~/.claude/projects. No network calls; share card has totals only.
 - Source: https://github.com/alpit-patel/claude-wrapped
 - Docs and FAQ: https://alpit-patel.github.io/claude-wrapped/

@@ -12,9 +12,9 @@ const flag = (n) => args.includes(n);
 const val = (n, d) => { const i = args.indexOf(n); return i >= 0 && args[i + 1] ? args[i + 1] : d; };
 
 if (flag('--help') || flag('-h')) {
-  console.log(`claude-wrapped: your Claude Code year, Spotify-Wrapped style.
+  console.log(`claude-code-wrapped: your Claude Code year, Spotify-Wrapped style.
 
-Usage: npx claude-wrapped [options]
+Usage: npx claude-code-wrapped [options]
   --year <YYYY>   year to summarize (default: current year)
   --dir <path>    transcripts folder (default: ~/.claude/projects)
   --out <file>    output html (default: ./claude-wrapped-<year>.html)

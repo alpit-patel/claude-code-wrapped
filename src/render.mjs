@@ -126,11 +126,11 @@ function draw(){
  x.fillStyle='#a1a1a6';x.font='400 34px '+F;wrap(p.blurb,80,ly+80,880,46);
  const cells=[[st.totals.prompts.toLocaleString(),'prompts 🗣️','#ffd60a'],[compact(st.totals.tokens),'tokens 📚','#7be495'],[st.manners.please.toLocaleString(),'pleases 🙏','#ff9f68'],[st.rhythm.longestStreak+'d','best streak 🔥','#f5f5f7']];
  cells.forEach((c,i)=>{const cx=80+(i%2)*480,cy=700+Math.floor(i/2)*220;x.fillStyle='#ffffff14';x.beginPath();x.roundRect(cx,cy,440,196,32);x.fill();x.strokeStyle='#ffffff1f';x.lineWidth=2;x.stroke();x.fillStyle=c[2];x.font='800 78px '+F;x.fillText(c[0],cx+34,cy+98);x.fillStyle='#a1a1a6';x.font='400 30px '+F;x.fillText(c[1],cx+34,cy+152)});
- x.fillStyle='#6e6e73';x.font='400 26px '+F;x.fillText('Peak hour '+hr(st.rhythm.peakHour)+'   ·   Get yours: npx claude-wrapped',80,1290);
+ x.fillStyle='#6e6e73';x.font='400 26px '+F;x.fillText('Peak hour '+hr(st.rhythm.peakHour)+'   ·   Get yours: npx claude-code-wrapped',80,1290);
 }
 draw();
 document.getElementById('dl').onclick=()=>{const a=document.createElement('a');a.download='claude-wrapped-'+st.year+'.png';a.href=cv.toDataURL('image/png');a.click()};
-const cap=\`My Claude Code ${st.year} \${p.emoji}: \${st.totals.prompts.toLocaleString()} prompts, \${compact(st.totals.tokens)} tokens, said "please" \${st.manners.please} times. I'm \${p.name}. npx claude-wrapped\`;
+const cap=\`My Claude Code ${st.year} \${p.emoji}: \${st.totals.prompts.toLocaleString()} prompts, \${compact(st.totals.tokens)} tokens, said "please" \${st.manners.please} times. I'm \${p.name}. npx claude-code-wrapped\`;
 document.getElementById('cp').onclick=async e=>{try{await navigator.clipboard.writeText(cap);e.target.textContent='Copied!'}catch{prompt('Copy:',cap)}};
 </script></body></html>`;
 }

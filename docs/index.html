@@ -14,10 +14,10 @@
 {"@type":"SoftwareApplication","name":"Claude Wrapped","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux","description":"A free, open-source command-line tool that summarizes your Claude Code usage for the year as a Spotify-Wrapped-style story and shareable card.","url":"https://alpit-patel.github.io/claude-wrapped/","codeRepository":"https://github.com/alpit-patel/claude-wrapped","license":"https://opensource.org/licenses/MIT","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Alpit Patel"}},
 {"@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"What is Claude Wrapped?","acceptedAnswer":{"@type":"Answer","text":"A free, open-source command-line tool that summarizes your Claude Code usage for the year, like Spotify Wrapped does for music."}},
-{"@type":"Question","name":"How do I run Claude Wrapped?","acceptedAnswer":{"@type":"Answer","text":"Run npx claude-wrapped in your terminal. It needs Node 18 or newer and no account or API key."}},
+{"@type":"Question","name":"How do I run Claude Wrapped?","acceptedAnswer":{"@type":"Answer","text":"Run npx claude-code-wrapped in your terminal. It needs Node 18 or newer and no account or API key."}},
 {"@type":"Question","name":"Is my Claude Code data uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. It reads transcripts stored on your computer and makes no network calls. The share card contains only totals, never prompt text or project names."}},
 {"@type":"Question","name":"Where does Claude Wrapped get its data?","acceptedAnswer":{"@type":"Answer","text":"From the transcript files Claude Code saves locally in ~/.claude/projects."}},
-{"@type":"Question","name":"How do I see last year's stats?","acceptedAnswer":{"@type":"Answer","text":"Run npx claude-wrapped --year 2025."}}]}]}
+{"@type":"Question","name":"How do I see last year's stats?","acceptedAnswer":{"@type":"Answer","text":"Run npx claude-code-wrapped --year 2025."}}]}]}
 </script>
 <style>
 :root{--ink:#f5f5f7;--mute:#a1a1a6;--font:-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,"Segoe UI",system-ui,sans-serif}
@@ -43,7 +43,7 @@ footer{margin-top:56px;text-align:center;color:var(--mute);font-size:.9rem}a{col
 <div class="hero"><span class="pill">🐶 Free · Open source · 100% local</span>
 <h1>Claude <span class="grad">Wrapped</span></h1>
 <p class="lead"><b>Your Claude Code year in review.</b> One command turns your history into a story and a card worth sharing.</p>
-<div class="cmd">npx claude-wrapped</div><br>
+<div class="cmd">npx claude-code-wrapped</div><br>
 <a class="cta" href="https://github.com/alpit-patel/claude-wrapped">View on GitHub</a><a class="cta ghost" href="#faq">FAQ</a>
 <img class="shot" src="card.png" alt="Claude Wrapped share card showing prompts, tokens, pleases and best streak"></div>
 <h2>What you get 🎁</h2>
@@ -56,9 +56,9 @@ footer{margin-top:56px;text-align:center;color:var(--mute);font-size:.9rem}a{col
 <div class="f"><i>🐶</i><b>A personality</b><span>Good Boy Builder, Night Owl, Gentleman, Streaker...</span></div></div>
 <h2 id="faq">FAQ 🤔</h2>
 <details><summary>What is Claude Wrapped?</summary><p>A free, open-source command-line tool that summarizes your Claude Code usage for the year, like Spotify Wrapped does for music.</p></details>
-<details><summary>How do I run it?</summary><p>Run <b>npx claude-wrapped</b> in your terminal. It needs Node 18 or newer and no account or API key.</p></details>
+<details><summary>How do I run it?</summary><p>Run <b>npx claude-code-wrapped</b> in your terminal. It needs Node 18 or newer and no account or API key.</p></details>
 <details><summary>Is my data uploaded?</summary><p>No. It reads transcripts stored on your computer and makes no network calls. The share card contains only totals, never prompt text or project names.</p></details>
 <details><summary>Where does it get its data?</summary><p>From the transcript files Claude Code saves locally in <b>~/.claude/projects</b>.</p></details>
-<details><summary>How do I see last year's stats?</summary><p>Run <b>npx claude-wrapped --year 2025</b>.</p></details>
+<details><summary>How do I see last year's stats?</summary><p>Run <b>npx claude-code-wrapped --year 2025</b>.</p></details>
 <footer>MIT licensed. Built by <a href="https://github.com/alpit-patel">Alpit Patel</a>. Not affiliated with Anthropic. 🐾</footer>
 </main></body></html>

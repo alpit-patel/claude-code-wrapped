@@ -5,8 +5,8 @@
 <img src="docs/card.png" width="360" alt="Claude Wrapped share card showing prompts, tokens, pleases and best streak">
 
 ```bash
-npx claude-wrapped            # reads ~/.claude/projects and opens your story
-npx claude-wrapped --demo     # preview with fake data
+npx claude-code-wrapped            # reads ~/.claude/projects and opens your story
+npx claude-code-wrapped --demo     # preview with fake data
 ```
 
 Requires Node 18 or newer. No install, no account, no API key.
@@ -34,7 +34,7 @@ From the transcript files Claude Code already saves on your computer in `~/.clau
 No. It makes no network calls and has zero dependencies. The share card and caption contain only totals, with no prompt text and no project names.
 
 ### How do I see last year's stats?
-Run `npx claude-wrapped --year 2025`.
+Run `npx claude-code-wrapped --year 2025`.
 
 ### Does it work with the Claude desktop app or claude.ai chats?
 No. It reads Claude Code transcripts only.
