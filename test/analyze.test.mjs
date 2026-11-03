@@ -40,3 +40,11 @@ test('renders html without leaking prompt text', () => {
 });
 
 test('personality returns a name', () => assert.ok(personality(demoStats()).name));
+
+test('computes languages, heatmap data and achievements', () => {
+  const st = analyze(findTranscriptFiles(mk()), { year: 2026 });
+  assert.deepEqual(st.topLanguages[0], ['JavaScript', 1]);
+  assert.equal(st.daily['2026-03-01'], 1);
+  assert.ok(Array.isArray(st.achievements));
+  assert.ok(renderHtml(demoStats(2026)).includes('Badges unlocked'));
+});

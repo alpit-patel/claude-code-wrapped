@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://alpit-patel.github.io/claude-wrapped/sitemap.xml

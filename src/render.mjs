@@ -37,6 +37,14 @@ li span:last-child{color:var(--mute);font-variant-numeric:tabular-nums}
 .btn{display:inline-block;margin:28px 12px 0 0;padding:14px 24px;border-radius:999px;border:0;background:var(--accent);color:#1a0f0a;font:600 1rem inherit;cursor:pointer}
 .btn.ghost{background:transparent;color:var(--ink);border:1px solid #ffffff44}
 canvas{max-width:min(100%,420px);height:auto;border-radius:20px;margin-top:28px;box-shadow:0 20px 60px #0008}
+.heat{overflow-x:auto;grid-auto-columns:minmax(11px,1fr);display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px;margin-top:28px;max-width:900px}
+.heat i{aspect-ratio:1;border-radius:3px;background:#ffffff10}
+.heat i[data-l="1"]{background:#d9775744}.heat i[data-l="2"]{background:#d9775788}.heat i[data-l="3"]{background:#d97757cc}.heat i[data-l="4"]{background:#f2b84b}
+.badges{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;max-width:760px}
+.badge{background:#ffffff10;border:1px solid #ffffff1f;border-radius:16px;padding:14px 18px}
+.badge b{display:block;font-size:1.1rem}.badge span{color:var(--mute);font-size:.85rem}
+.dots{position:fixed;right:12px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:5}
+.dots a{width:8px;height:8px;border-radius:50%;background:#ffffff33;display:block}.dots a.on{background:var(--accent)}
 .hint{position:fixed;bottom:14px;left:0;right:0;text-align:center;color:var(--mute);font-size:.75rem;pointer-events:none}
 .rv{opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.7,.2,1)}
 .in .rv{opacity:1;transform:none}
@@ -51,20 +59,32 @@ canvas{max-width:min(100%,420px);height:auto;border-radius:20px;margin-top:28px;
 <div class="row rv"><div class="stat"><b>${fmt(st.manners.caps)}</b><span>SHOUTED words</span></div><div class="stat"><b>${fmt(st.manners.questions)}</b><span>question marks</span></div><div class="stat"><b>${fmt(st.manners.interrupts)}</b><span>times you hit stop</span></div></div></section>
 <section id="s4" style="--g:#f2b84b33"><div class="k rv">Your rhythm</div><h1 class="rv" style="max-width:20ch">${hour(st.rhythm.peakHour)} is your hour.</h1><p class="sub rv">${st.manners.nightPrompts ? `<b>${fmt(st.manners.nightPrompts)}</b> prompts landed between midnight and 5am. ` : ''}${st.rhythm.busiestDay ? `Busiest day: <b>${st.rhythm.busiestDay.date}</b> with ${fmt(st.rhythm.busiestDay.prompts)} prompts.` : ''}</p>
 <div class="bars rv">${bars(st.rhythm.hours, st.rhythm.peakHour)}</div><div class="axis rv"><span>12am</span><span>6am</span><span>12pm</span><span>6pm</span><span>11pm</span></div></section>
+<section id="s4b" style="--g:#7cc4a433"><div class="k rv">Your year at a glance</div><h1 class="rv" style="max-width:20ch">${fmt(st.totals.activeDays)} days. ${fmt(st.rhythm.longestStreak)} in a row.</h1>
+<div class="heat rv" role="img" aria-label="Activity heatmap for ${st.year}">${heat(st)}</div><p class="sub rv">Every square is a day. Darker means more prompts.</p></section>
+${st.topLanguages && st.topLanguages.length ? `<section id="s4c"><div class="k rv">Languages Claude wrote for you</div><h1 class="rv" style="max-width:20ch">${esc(st.topLanguages[0][0])} was your main squeeze.</h1>
+<ol class="rv">${st.topLanguages.map(([n, c]) => `<li><span>${esc(n)}</span><span>${fmt(c)} edits</span></li>`).join('')}</ol></section>` : ''}
 <section id="s5"><div class="k rv">Your toolkit</div><h1 class="rv" style="max-width:20ch">What Claude actually did.</h1>
 <ol class="rv">${st.topTools.map(([n, c]) => `<li><span>${esc(n)}</span><span>${fmt(c)}</span></li>`).join('')}</ol>
 ${st.topFile ? `<p class="sub rv">Most-edited file: <b>${esc(st.topFile.name)}</b>, ${fmt(st.topFile.edits)} edits. Yes, that one.</p>` : ''}</section>
 <section id="s6" style="--g:#d9775744"><div class="k rv">Words you kept saying</div><h1 class="rv" style="max-width:20ch">${st.topWords.slice(0, 3).map(([w]) => esc(w)).join(', ') || '...'}</h1>
 <ol class="rv">${st.topWords.slice(0, 6).map(([w, c]) => `<li><span>${esc(w)}</span><span>${fmt(c)}</span></li>`).join('')}</ol></section>
+${st.achievements && st.achievements.length ? `<section id="s6b" style="--g:#f2b84b33"><div class="k rv">Badges unlocked</div><h1 class="rv" style="max-width:20ch">${st.achievements.length} earned this year.</h1>
+<div class="badges rv">${st.achievements.map((a) => `<div class="badge"><b>${esc(a.name)}</b><span>${esc(a.why)}</span></div>`).join('')}</div></section>` : ''}
 <section id="s7" style="--g:#d9775755"><div class="k rv">Your Claude personality</div><h1 class="rv">${esc(p.name)}</h1><p class="sub rv">${esc(p.blurb)}</p>
 <div class="rv"><canvas id="cv" width="1080" height="1350"></canvas></div>
 <div class="rv"><button class="btn" id="dl">Download card (PNG)</button><button class="btn ghost" id="cp">Copy caption</button></div></section>
-<div class="hint">scroll ↓</div>
+<nav class="dots" aria-label="Slides"></nav>
+<div class="hint">scroll ↓ or use arrow keys</div>
 <script>
 const D=${safeJson(data)};
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');e.target.querySelectorAll('[data-n]').forEach(count)}}),{threshold:.4});
 document.querySelectorAll('section').forEach(s=>io.observe(s));
 function count(el){if(el.dataset.done)return;el.dataset.done=1;const n=+el.dataset.n;if(matchMedia('(prefers-reduced-motion:reduce)').matches){el.textContent=n.toLocaleString();return}const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-k,4);el.textContent=Math.round(n*e).toLocaleString();if(k<1)requestAnimationFrame(f)})(t0)}
+const secs=[...document.querySelectorAll('section')],nav=document.querySelector('.dots');
+secs.forEach((sc,i)=>{const a=document.createElement('a');a.href='#'+sc.id;a.setAttribute('aria-label','Slide '+(i+1));nav.appendChild(a)});
+const dots=[...nav.children];
+secs.forEach(sc=>new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){dots.forEach(d=>d.classList.remove('on'));dots[secs.indexOf(sc)].classList.add('on')}}),{threshold:.55}).observe(sc));
+addEventListener('keydown',e=>{const cur=Math.max(0,dots.findIndex(d=>d.classList.contains('on')));const k=e.key;if(['ArrowDown','ArrowRight','PageDown',' '].includes(k)){e.preventDefault();secs[Math.min(secs.length-1,cur+1)].scrollIntoView({behavior:'smooth'})}if(['ArrowUp','ArrowLeft','PageUp'].includes(k)){e.preventDefault();secs[Math.max(0,cur-1)].scrollIntoView({behavior:'smooth'})}});
 const st=D.st,p=D.p,cv=document.getElementById('cv'),x=cv.getContext('2d');
 function rr(a,b,w,h,r){x.beginPath();x.roundRect(a,b,w,h,r)}
 function draw(){
@@ -95,3 +115,15 @@ function compact(n) { return n >= 1e9 ? (n / 1e9).toFixed(1) + 'B' : n >= 1e6 ? 
 function hour(h) { return (h % 12 || 12) + (h < 12 ? 'am' : 'pm'); }
 function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 function bars(h, pk) { const m = Math.max(...h, 1); return h.map((v, i) => `<i class="${i === pk ? 'pk' : ''}" style="height:${Math.max(2, (v / m) * 100)}%"></i>`).join(''); }
+
+function heat(st) {
+  const y = st.year, start = new Date(Date.UTC(y, 0, 1)), cells = [];
+  for (let i = 0; i < start.getUTCDay(); i++) cells.push('<i style="visibility:hidden"></i>');
+  const vals = Object.values(st.daily || {}), mx = Math.max(1, ...vals);
+  for (let d = start; d.getUTCFullYear() === y; d = new Date(+d + 864e5)) {
+    const k = d.toISOString().slice(0, 10), n = (st.daily || {})[k] || 0;
+    const l = !n ? 0 : Math.min(4, 1 + Math.floor((n / mx) * 3.99));
+    cells.push(`<i data-l="${l}" title="${k}: ${n}"></i>`);
+  }
+  return cells.join('');
+}

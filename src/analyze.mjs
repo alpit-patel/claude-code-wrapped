@@ -8,6 +8,10 @@ const STOP = new Set(('the a an and or but if then so to of in on at for with fr
   'there here also as about into out up down over than too very more some any all have has had get got make let use using want need like ' +
   'please thanks thank claude file files code one two new add').split(' '));
 
+const LANGS = { js: 'JavaScript', mjs: 'JavaScript', cjs: 'JavaScript', jsx: 'JavaScript', ts: 'TypeScript', tsx: 'TypeScript', py: 'Python', go: 'Go', rs: 'Rust',
+  rb: 'Ruby', java: 'Java', kt: 'Kotlin', swift: 'Swift', php: 'PHP', c: 'C', h: 'C', cpp: 'C++', cs: 'C#', html: 'HTML', css: 'CSS', scss: 'CSS',
+  astro: 'Astro', vue: 'Vue', svelte: 'Svelte', md: 'Markdown', mdx: 'Markdown', json: 'JSON', yml: 'YAML', yaml: 'YAML', sh: 'Shell', sql: 'SQL' };
+
 export function findTranscriptFiles(root) {
   const out = [];
   const walk = (dir) => {
@@ -46,6 +50,7 @@ export function analyze(files, { year = new Date().getFullYear() } = {}) {
   const tools = new Map();
   const models = new Map();
   const edited = new Map();
+  const langs = new Map();
   const projects = new Map();
   const words = new Map();
   const prompts = []; // {text, ts}
@@ -84,7 +89,11 @@ export function analyze(files, { year = new Date().getFullYear() } = {}) {
           if (b?.type !== 'tool_use') continue;
           tools.set(b.name, (tools.get(b.name) || 0) + 1);
           const fp = b.input?.file_path;
-          if (fp && ['Edit', 'Write', 'MultiEdit'].includes(b.name)) edited.set(fp, (edited.get(fp) || 0) + 1);
+          if (fp && ['Edit', 'Write', 'MultiEdit'].includes(b.name)) {
+            edited.set(fp, (edited.get(fp) || 0) + 1);
+            const l = LANGS[fp.split('.').pop().toLowerCase()];
+            if (l) langs.set(l, (langs.get(l) || 0) + 1);
+          }
         }
         continue;
       }
@@ -140,8 +149,11 @@ export function analyze(files, { year = new Date().getFullYear() } = {}) {
   const peakHour = hours.indexOf(Math.max(...hours));
   const topFile = top(edited, 1)[0] || null;
 
-  return {
+  const daily = Object.fromEntries(days);
+  const result = {
     year,
+    daily,
+    topLanguages: top(langs, 5),
     totals: {
       prompts: prompts.length,
       sessions: sessionList.length,
@@ -167,6 +179,26 @@ export function analyze(files, { year = new Date().getFullYear() } = {}) {
     avgPromptChars: prompts.length ? Math.round(promptChars / prompts.length) : 0,
     shortPrompts: shortestPrompts.length,
   };
+  result.achievements = achievements(result);
+  return result;
+}
+
+export function achievements(st) {
+  const t = st.totals, m = st.manners, r = st.rhythm;
+  const all = [
+    [t.prompts >= 1000, 'Four Digits', '1,000+ prompts'],
+    [t.activeDays >= 100, 'Regular', '100+ active days'],
+    [r.longestStreak >= 7, 'On a Roll', '7+ day streak'],
+    [(st.longestSession?.hours || 0) >= 5, 'Marathoner', 'a session over 5 hours'],
+    [m.please >= 100, 'Polite Human', 'said please 100+ times'],
+    [m.nightPrompts >= 100, 'Night Owl', '100+ prompts after midnight'],
+    [t.projects >= 10, 'Multitasker', '10+ projects'],
+    [t.filesEdited >= 500, 'File Wrecker', '500+ files edited'],
+    [t.tokens >= 1e9, 'Billionaire', '1B+ tokens'],
+    [(st.topLanguages || []).length >= 4, 'Polyglot', '4+ languages'],
+    [m.interrupts >= 50, 'Backseat Driver', 'hit stop 50+ times'],
+  ];
+  return all.filter((a) => a[0]).map(([, name, why]) => ({ name, why }));
 }
 
 export function personality(st) {

@@ -1,16 +1,47 @@
 {
   "name": "claude-wrapped",
   "version": "0.1.0",
-  "description": "Your Claude Code year, Spotify-Wrapped style. Runs 100% locally. Zero dependencies.",
+  "description": "Claude Wrapped: your Claude Code year in review, Spotify-Wrapped style. One command makes a shareable stats card. Runs locally, zero dependencies.",
   "type": "module",
-  "bin": { "claude-wrapped": "bin/cli.mjs" },
-  "files": ["bin", "src", "README.md"],
+  "bin": {
+    "claude-wrapped": "bin/cli.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
   "scripts": {
     "start": "node bin/cli.mjs",
     "demo": "node bin/cli.mjs --demo",
     "test": "node --test test/*.test.mjs"
   },
-  "engines": { "node": ">=18" },
-  "keywords": ["claude", "claude-code", "wrapped", "stats", "ai"],
-  "license": "MIT"
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "claude wrapped",
+    "anthropic",
+    "wrapped",
+    "year in review",
+    "developer-tools",
+    "cli",
+    "ai",
+    "stats",
+    "usage",
+    "tokens",
+    "npx"
+  ],
+  "license": "MIT",
+  "homepage": "https://alpit-patel.github.io/claude-wrapped/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpit-patel/claude-wrapped.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alpit-patel/claude-wrapped/issues"
+  },
+  "author": "Alpit Patel"
 }
