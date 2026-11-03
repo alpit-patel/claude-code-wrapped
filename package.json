@@ -1,6 +1,6 @@
 {
   "name": "claude-year-wrapped",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Claude Wrapped: your Claude Code year in review, Spotify-Wrapped style. One command makes a shareable stats card. Runs locally, zero dependencies.",
   "type": "module",
   "bin": {
@@ -35,13 +35,13 @@
     "npx"
   ],
   "license": "MIT",
-  "homepage": "https://alpit-patel.github.io/claude-wrapped/",
+  "homepage": "https://alpit-patel.github.io/claude-code-wrapped/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alpit-patel/claude-wrapped.git"
+    "url": "git+https://github.com/alpit-patel/claude-code-wrapped.git"
   },
   "bugs": {
-    "url": "https://github.com/alpit-patel/claude-wrapped/issues"
+    "url": "https://github.com/alpit-patel/claude-code-wrapped/issues"
   },
   "author": "Alpit Patel"
 }
