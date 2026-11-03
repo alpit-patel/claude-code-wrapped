@@ -204,11 +204,11 @@ export function achievements(st) {
 export function personality(st) {
   const t = st.totals, m = st.manners, r = st.rhythm;
   const per = Math.max(t.prompts, 1);
-  if (m.swears / per > 0.03) return { name: 'The Pressure Cooker', blurb: 'You and Claude have been through it. It still shows up every time.' };
-  if (m.nightPrompts / per > 0.2) return { name: 'The Night Owl', blurb: 'Your best code happens after midnight. Claude never asks you to go to bed.' };
-  if (m.please / per > 0.2) return { name: 'The Gentleman', blurb: 'Polite to a fault. When the robots take over, you are safe.' };
-  if (st.avgPromptChars > 600) return { name: 'The Architect', blurb: 'Long, careful briefs. Claude always knows exactly what you want.' };
-  if (st.avgPromptChars < 80) return { name: 'The Minimalist', blurb: 'A few words, one command. Claude reads your mind.' };
-  if (r.longestStreak >= 14) return { name: 'The Streaker', blurb: 'Showing up day after day. Consistency is the real superpower.' };
-  return { name: 'The Builder', blurb: 'You ship. Claude types. Everybody wins.' };
+  if (m.swears / per > 0.03) return { emoji: '🐯', name: 'The Pressure Cooker', blurb: 'You and Claude have been through it. It still shows up every time.' };
+  if (m.nightPrompts / per > 0.2) return { emoji: '🦉', name: 'The Night Owl', blurb: 'Your best code happens after midnight. Claude never asks you to go to bed.' };
+  if (m.please / per > 0.2) return { emoji: '🎩', name: 'The Gentleman', blurb: 'Polite to a fault. When the robots take over, you are safe.' };
+  if (st.avgPromptChars > 600) return { emoji: '🏗️', name: 'The Architect', blurb: 'Long, careful briefs. Claude always knows exactly what you want.' };
+  if (st.avgPromptChars < 80) return { emoji: '🐱', name: 'The Minimalist', blurb: 'A few words, one command. Claude reads your mind.' };
+  if (r.longestStreak >= 14) return { emoji: '🔥', name: 'The Streaker', blurb: 'Showing up day after day. Consistency is the real superpower.' };
+  return { emoji: '🐶', name: 'The Good Boy Builder', blurb: 'You ship. Claude fetches. Everybody wins.' };
 }
