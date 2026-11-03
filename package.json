@@ -1,10 +1,10 @@
 {
-  "name": "claude-code-wrapped",
+  "name": "claude-year-wrapped",
   "version": "0.1.0",
   "description": "Claude Wrapped: your Claude Code year in review, Spotify-Wrapped style. One command makes a shareable stats card. Runs locally, zero dependencies.",
   "type": "module",
   "bin": {
-    "claude-code-wrapped": "bin/cli.mjs"
+    "claude-year-wrapped": "bin/cli.mjs"
   },
   "files": [
     "bin",
