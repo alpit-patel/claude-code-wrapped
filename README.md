@@ -61,3 +61,6 @@ npm run demo
 ```
 
 Issues and ideas welcome. MIT licensed.
+
+## Releasing (maintainers)
+Bump `version` in `package.json` and push to `main`. GitHub Actions runs the tests, then publishes to npm automatically using npm trusted publishing. No tokens or 2FA codes needed.
