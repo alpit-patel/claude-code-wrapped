@@ -21,8 +21,8 @@ const mk = () => {
   return dir;
 };
 
-test('analyzes transcripts, dedupes messages, filters year and noise', () => {
-  const st = analyze(findTranscriptFiles(mk()), { year: 2026 });
+test('analyzes transcripts, dedupes messages, filters year and noise', async () => {
+  const st = await analyze(findTranscriptFiles(mk()), { year: 2026 });
   assert.equal(st.totals.prompts, 1);
   assert.equal(st.manners.please, 1);
   assert.equal(st.manners.thanks, 1);
@@ -41,10 +41,35 @@ test('renders html without leaking prompt text', () => {
 
 test('personality returns a name', () => assert.ok(personality(demoStats()).name));
 
-test('computes languages, heatmap data and achievements', () => {
-  const st = analyze(findTranscriptFiles(mk()), { year: 2026 });
+test('computes languages, heatmap data and achievements', async () => {
+  const st = await analyze(findTranscriptFiles(mk()), { year: 2026 });
   assert.deepEqual(st.topLanguages[0], ['JavaScript', 1]);
   assert.equal(st.daily['2026-03-01'], 1);
   assert.ok(Array.isArray(st.achievements));
   assert.ok(renderHtml(demoStats(2026)).includes('Badges unlocked'));
+});
+
+test('handles Windows paths, empty dirs and bad lines', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'cw-'));
+  writeFileSync(join(dir, 'w.jsonl'), [
+    JSON.stringify({ type: 'user', timestamp: '2026-05-05T12:00:00Z', sessionId: 'w', cwd: 'C:\\Users\\me\\proj', message: { role: 'user', content: 'hello' } }),
+    JSON.stringify({ type: 'assistant', timestamp: '2026-05-05T12:00:05Z', sessionId: 'w', message: { id: 'a', content: [{ type: 'tool_use', name: 'Write', input: { file_path: 'C:\\Users\\me\\proj\\a.py' } }] } }),
+    '{broken', '', 'null',
+  ].join('\r\n'));
+  const st = await analyze(findTranscriptFiles(dir), { year: 2026 });
+  assert.equal(st.totals.prompts, 1);
+  assert.equal(st.topProjects[0][0], 'proj');
+  assert.equal(st.topFile.name, 'proj/a.py');
+  const empty = await analyze([], { year: 2026 });
+  assert.equal(empty.totals.prompts, 0);
+  assert.ok(renderHtml(empty).includes('Claude Wrapped'));
+});
+
+test('escapes hostile text in html', async () => {
+  const st = demoStats(2026);
+  st.topWords = [['<script>alert(1)</script>', 3]];
+  st.topTools = [['"><img src=x onerror=alert(1)>', 1]];
+  const html = renderHtml(st);
+  assert.ok(!html.includes('<script>alert(1)'));
+  assert.ok(!html.includes('<img src=x'));
 });

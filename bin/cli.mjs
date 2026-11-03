@@ -2,7 +2,7 @@
 import { writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { exec } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { analyze, findTranscriptFiles } from '../src/analyze.mjs';
 import { renderHtml } from '../src/render.mjs';
 import { demoStats } from '../src/demo.mjs';
@@ -27,13 +27,15 @@ Runs 100% locally. Nothing is uploaded.`);
 }
 
 const year = Number(val('--year', new Date().getFullYear()));
+if (!Number.isInteger(year) || year < 2023 || year > 2100) { console.error('Invalid --year. Example: --year 2025'); process.exit(1); }
 let st;
 if (flag('--demo')) st = demoStats(year);
 else {
-  const dir = resolve(val('--dir', join(homedir(), '.claude', 'projects')));
+  const base = process.env.CLAUDE_CONFIG_DIR || join(homedir(), '.claude');
+  const dir = resolve(val('--dir', join(base, 'projects')));
   const files = findTranscriptFiles(dir);
   if (!files.length) { console.error(`No Claude Code transcripts found in ${dir}.\nTry --demo to preview.`); process.exit(1); }
-  st = analyze(files, { year });
+  st = await analyze(files, { year });
   if (!st.totals.prompts) { console.error(`No prompts found for ${year} in ${files.length} files. Try --year ${year - 1}.`); process.exit(1); }
 }
 
@@ -42,11 +44,17 @@ const out = resolve(val('--out', `claude-wrapped-${year}.html`));
 writeFileSync(out, renderHtml(st));
 console.log(`Done. ${st.totals.prompts.toLocaleString()} prompts, ${st.totals.sessions} sessions.\nOpen: ${out}`);
 if (!flag('--no-open')) {
-  // Windows can map .html to a text editor, so try Edge (always installed) first, then the default app.
+  // Never pass user-controlled text through a shell. Windows can map .html to a text editor, so try Edge first.
+  const run = (cmd, a, onFail) => {
+    try {
+      const c = spawn(cmd, a, { stdio: 'ignore', detached: true, windowsHide: true });
+      c.on('error', () => onFail && onFail());
+      c.unref();
+    } catch { onFail && onFail(); }
+  };
   if (process.platform === 'win32') {
-    exec(`start "" msedge "${out}"`, (err) => { if (err) exec(`start "" "${out}"`, () => {}); });
-  } else {
-    exec(`${process.platform === 'darwin' ? 'open' : 'xdg-open'} "${out}"`, () => {});
-  }
+    const safe = !/[&|<>^%"]/.test(out);
+    if (safe) run('cmd.exe', ['/c', 'start', '""', 'msedge', `"${out}"`], () => run('cmd.exe', ['/c', 'start', '""', `"${out}"`]));
+  } else run(process.platform === 'darwin' ? 'open' : 'xdg-open', [out]);
   console.log('If it opens as code, open the file in your browser instead.');
 }

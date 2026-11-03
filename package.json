@@ -1,6 +1,6 @@
 {
   "name": "claude-year-wrapped",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Claude Wrapped: your Claude Code year in review, Spotify-Wrapped style. One command makes a shareable stats card. Runs locally, zero dependencies.",
   "type": "module",
   "bin": {

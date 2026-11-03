@@ -1,6 +1,7 @@
 // Reads Claude Code transcripts (~/.claude/projects/**/*.jsonl) and computes stats.
 // Everything stays on the local machine. Nothing is uploaded.
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { readdirSync, createReadStream } from 'node:fs';
+import { createInterface } from 'node:readline';
 import { join, basename } from 'node:path';
 
 const STOP = new Set(('the a an and or but if then so to of in on at for with from by is are was were be been it its this that these those ' +
@@ -41,7 +42,7 @@ const isNoise = (t) =>
 
 const count = (s, re) => (s.match(re) || []).length;
 
-export function analyze(files, { year = new Date().getFullYear() } = {}) {
+export async function analyze(files, { year = new Date().getFullYear() } = {}) {
   const sessions = new Map(); // id -> {first,last,prompts,project}
   const seenMsg = new Set();
   const days = new Map();
@@ -59,9 +60,10 @@ export function analyze(files, { year = new Date().getFullYear() } = {}) {
   let nightPrompts = 0, interrupts = 0, errorsFixed = 0;
 
   for (const file of files) {
-    let raw;
-    try { raw = readFileSync(file, 'utf8'); } catch { continue; }
-    for (const line of raw.split('\n')) {
+    let rl;
+    try { rl = createInterface({ input: createReadStream(file, { encoding: 'utf8' }), crlfDelay: Infinity }); } catch { continue; }
+    try {
+    for await (const line of rl) {
       if (!line) continue;
       let o;
       try { o = JSON.parse(line); } catch { continue; }
@@ -106,7 +108,7 @@ export function analyze(files, { year = new Date().getFullYear() } = {}) {
       if (text.startsWith('[Request interrupted')) { interrupts++; continue; }
 
       s.prompts++;
-      const dk = d.toISOString().slice(0, 10);
+      const dk = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
       days.set(dk, (days.get(dk) || 0) + 1);
       hours[d.getHours()]++;
       weekdays[d.getDay()]++;
@@ -128,6 +130,7 @@ export function analyze(files, { year = new Date().getFullYear() } = {}) {
         if (!STOP.has(w)) words.set(w, (words.get(w) || 0) + 1);
       }
     }
+    } catch { /* unreadable file: skip */ }
   }
 
   const top = (m, n) => [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, n);
@@ -171,9 +174,9 @@ export function analyze(files, { year = new Date().getFullYear() } = {}) {
     rhythm: { hours, weekdays, peakHour, busiestDay: busiest ? { date: busiest[0], prompts: busiest[1] } : null, longestStreak: best },
     topTools: top(tools, 5),
     topModels: top(models, 3),
-    topProjects: top(projects, 5).map(([p, n]) => [p.split('/').filter(Boolean).pop() || p, n]),
+    topProjects: top(projects, 5).map(([p, n]) => [p.split(/[\\/]/).filter(Boolean).pop() || p, n]),
     topWords: top(words, 8),
-    topFile: topFile ? { name: topFile[0].split('/').slice(-2).join('/'), edits: topFile[1] } : null,
+    topFile: topFile ? { name: topFile[0].split(/[\\/]/).slice(-2).join('/'), edits: topFile[1] } : null,
     longestSession: longest ? { hours: Math.round(((longest.last - longest.first) / 3600e3) * 10) / 10, prompts: longest.prompts } : null,
     longestPrompt: longestPrompt ? { chars: longestPrompt.text.length, preview: longestPrompt.text.slice(0, 140) } : null,
     avgPromptChars: prompts.length ? Math.round(promptChars / prompts.length) : 0,
