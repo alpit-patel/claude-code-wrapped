@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Claude Wrapped: Your Claude Code Year in Review</title>
-<meta name="description" content="Claude Wrapped turns your Claude Code history into a Spotify-Wrapped-style story and a shareable card. One command, runs locally, nothing uploaded. Free and open source.">
+<meta name="description" content="Claude Wrapped turns your Claude Code history into a Spotify-Wrapped-style story and a shareable card. One command, 100% local, free and open source.">
 <link rel="canonical" href="https://alpit-patel.github.io/claude-code-wrapped/">
 <meta property="og:type" content="website"><meta property="og:title" content="Claude Wrapped: Your Claude Code Year in Review">
 <meta property="og:description" content="One command makes a shareable stats card from your Claude Code history. 100% local.">
@@ -10,14 +10,7 @@
 <meta property="og:url" content="https://alpit-patel.github.io/claude-code-wrapped/">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[
-{"@type":"SoftwareApplication","name":"Claude Wrapped","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux","description":"A free, open-source command-line tool that summarizes your Claude Code usage for the year as a Spotify-Wrapped-style story and shareable card.","url":"https://alpit-patel.github.io/claude-code-wrapped/","codeRepository":"https://github.com/alpit-patel/claude-code-wrapped","license":"https://opensource.org/licenses/MIT","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Alpit Patel"}},
-{"@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"What is Claude Wrapped?","acceptedAnswer":{"@type":"Answer","text":"A free, open-source command-line tool that summarizes your Claude Code usage for the year, like Spotify Wrapped does for music."}},
-{"@type":"Question","name":"How do I run Claude Wrapped?","acceptedAnswer":{"@type":"Answer","text":"Run npx claude-year-wrapped in your terminal. It needs Node 18 or newer and no account or API key."}},
-{"@type":"Question","name":"Is my Claude Code data uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. It reads transcripts stored on your computer and makes no network calls. The share card contains only totals, never prompt text or project names."}},
-{"@type":"Question","name":"Where does Claude Wrapped get its data?","acceptedAnswer":{"@type":"Answer","text":"From the transcript files Claude Code saves locally in ~/.claude/projects."}},
-{"@type":"Question","name":"How do I see last year's stats?","acceptedAnswer":{"@type":"Answer","text":"Run npx claude-year-wrapped --year 2025."}}]}]}
+{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "@id": "https://alpit-patel.github.io/claude-code-wrapped/#page", "url": "https://alpit-patel.github.io/claude-code-wrapped/", "name": "Claude Wrapped: Your Claude Code Year in Review", "inLanguage": "en", "datePublished": "2026-11-03", "dateModified": "2026-11-04", "author": {"@id": "https://github.com/alpit-patel#person"}, "about": {"@id": "https://alpit-patel.github.io/claude-code-wrapped/#app"}}, {"@type": "SoftwareApplication", "@id": "https://alpit-patel.github.io/claude-code-wrapped/#app", "name": "Claude Wrapped", "applicationCategory": "DeveloperApplication", "operatingSystem": "Windows, macOS, Linux", "description": "A free, open-source command-line tool that summarizes your Claude Code usage for the year as a Spotify-Wrapped-style story and shareable card.", "url": "https://alpit-patel.github.io/claude-code-wrapped/", "codeRepository": "https://github.com/alpit-patel/claude-code-wrapped", "downloadUrl": "https://www.npmjs.com/package/claude-year-wrapped", "softwareVersion": "0.1.6", "license": "https://opensource.org/licenses/MIT", "image": "https://alpit-patel.github.io/claude-code-wrapped/card.png", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@id": "https://github.com/alpit-patel#person"}}, {"@type": "Person", "@id": "https://github.com/alpit-patel#person", "name": "Alpit Patel", "url": "https://github.com/alpit-patel", "sameAs": ["https://github.com/alpit-patel", "https://x.com/alpitpatel_", "https://www.linkedin.com/in/alpitpatel"]}, {"@type": "HowTo", "name": "How to make your Claude Code Wrapped", "step": [{"@type": "HowToStep", "name": "Open a terminal", "text": "Any terminal with Node 18 or newer."}, {"@type": "HowToStep", "name": "Run the command", "text": "Run npx claude-year-wrapped. It reads your local Claude Code transcripts."}, {"@type": "HowToStep", "name": "Scroll your story", "text": "Your browser opens a scroll-through story of your year."}, {"@type": "HowToStep", "name": "Share the card", "text": "Save the 1080x1350 PNG card and copy the caption."}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Claude Wrapped?", "acceptedAnswer": {"@type": "Answer", "text": "A free, open-source command-line tool that summarizes your Claude Code usage for the year, like Spotify Wrapped does for music."}}, {"@type": "Question", "name": "How do I run Claude Wrapped?", "acceptedAnswer": {"@type": "Answer", "text": "Run npx claude-year-wrapped in your terminal. It needs Node 18 or newer and no account or API key."}}, {"@type": "Question", "name": "Is my Claude Code data uploaded?", "acceptedAnswer": {"@type": "Answer", "text": "No. It reads transcripts stored on your computer and makes no network calls. The share card contains only totals, never prompt text or project names."}}, {"@type": "Question", "name": "Where does Claude Wrapped get its data?", "acceptedAnswer": {"@type": "Answer", "text": "From the transcript files Claude Code saves locally in ~/.claude/projects. Use --dir to point it at another folder."}}, {"@type": "Question", "name": "How do I see last year's stats?", "acceptedAnswer": {"@type": "Answer", "text": "Run npx claude-year-wrapped --year 2025."}}, {"@type": "Question", "name": "Does it work with the Claude desktop app or claude.ai chats?", "acceptedAnswer": {"@type": "Answer", "text": "No. It reads Claude Code transcripts only."}}, {"@type": "Question", "name": "Are the stats exact?", "acceptedAnswer": {"@type": "Answer", "text": "Prompt, session and token counts come straight from your transcripts. Words like please are matched by simple text rules, and hours with Claude is estimated from session start and end times."}}, {"@type": "Question", "name": "Can I get the raw numbers?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Run npx claude-year-wrapped --json to print the stats as JSON instead of opening the story."}}]}]}
 </script>
 <style>
 :root{--ink:#f5f5f7;--mute:#a1a1a6;--font:-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,"Segoe UI",system-ui,sans-serif}
@@ -38,6 +31,7 @@ h2{margin:72px 0 20px;font-size:clamp(1.7rem,5vw,2.4rem);letter-spacing:-.03em;t
 .f{background:#ffffff0f;border:1px solid #ffffff17;border-radius:24px;padding:22px;backdrop-filter:blur(24px)}.f i{font-style:normal;font-size:2rem;display:block;margin-bottom:8px}.f b{display:block;margin-bottom:4px}.f span{color:var(--mute);font-size:.95rem}
 details{background:#ffffff0d;border:1px solid #ffffff14;border-radius:18px;padding:16px 20px;margin:10px 0}summary{cursor:pointer;font-weight:600}details p{color:var(--mute);margin-top:8px}details b{color:var(--ink)}
 footer{margin-top:56px;text-align:center;color:var(--mute);font-size:.9rem}a{color:#ff9f68}
+.meta{text-align:center;color:var(--mute);font-size:.9rem;margin-top:28px}.txt{color:var(--mute);max-width:60ch;margin:0 auto 18px;text-align:center}.steps{max-width:560px;margin:0 auto;padding-left:1.3em;color:var(--mute)}.steps li{margin:10px 0}.steps b{color:var(--ink)}code{font:.95em ui-monospace,SFMono-Regular,Menlo,monospace;background:#ffffff14;border-radius:6px;padding:1px 6px;color:var(--ink)}table{width:100%;max-width:560px;margin:0 auto;border-collapse:collapse}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #ffffff17}th{color:var(--ink)}td{color:var(--mute)}footer p{margin:6px 0}
 @media(prefers-reduced-motion:reduce){.shot{animation:none}}
 </style></head><body><main>
 <div class="hero"><span class="pill">🐶 Free · Open source · 100% local</span>
@@ -46,19 +40,50 @@ footer{margin-top:56px;text-align:center;color:var(--mute);font-size:.9rem}a{col
 <div class="cmd">npx claude-year-wrapped</div><br>
 <a class="cta" href="https://github.com/alpit-patel/claude-code-wrapped">View on GitHub</a><a class="cta ghost" href="#faq">FAQ</a>
 <img class="shot" src="card.png" alt="Claude Wrapped share card showing prompts, tokens, pleases and best streak"></div>
-<h2>What you get 🎁</h2>
+<p class="meta">By <a href="https://github.com/alpit-patel">Alpit Patel</a> · Published <time datetime="2026-11-03">3 November 2026</time> · Updated <time datetime="2026-11-04">4 November 2026</time> · Version 0.1.6</p>
+
+<h2>What does Claude Wrapped show? 🎁</h2>
+<p class="txt">Claude Wrapped reads the transcripts Claude Code already keeps on your computer and turns a year of work into numbers you can share. Everything below is computed locally in a few seconds.</p>
 <div class="grid">
-<div class="f"><i>🗣️</i><b>Prompts and streaks</b><span>Sessions, active days and your best run.</span></div>
-<div class="f"><i>🙏</i><b>Your manners</b><span>How many times you said please. And swore. 🤬</span></div>
-<div class="f"><i>🔥</i><b>Year heatmap</b><span>A GitHub-style calendar of your days with Claude.</span></div>
-<div class="f"><i>🌍</i><b>Languages</b><span>What Claude wrote for you, from TypeScript to Python.</span></div>
-<div class="f"><i>🏆</i><b>11 badges</b><span>Marathoner, Night Owl, Polite Human and more.</span></div>
-<div class="f"><i>🐶</i><b>A personality</b><span>Good Boy Builder, Night Owl, Gentleman, Streaker...</span></div></div>
+<div class="f"><i>🗣️</i><b>Prompts and streaks</b><span>Prompts, sessions, active days, hours with Claude and your best streak.</span></div>
+<div class="f"><i>📚</i><b>Tokens</b><span>Tokens moved, measured in copies of War and Peace.</span></div>
+<div class="f"><i>🙏</i><b>Your manners</b><span>How many times you said please, thanks and sorry. And swore. 🤬</span></div>
+<div class="f"><i>🔥</i><b>Year heatmap</b><span>A GitHub-style calendar of your active days, plus peak hour and busiest day.</span></div>
+<div class="f"><i>🌍</i><b>Languages and tools</b><span>Languages Claude wrote for you, top tools, most-edited file and favorite words.</span></div>
+<div class="f"><i>🏆</i><b>11 badges</b><span>Achievements such as Marathoner, Night Owl and Polite Human.</span></div>
+<div class="f"><i>🐶</i><b>A personality</b><span>One of 7: Good Boy Builder, Night Owl, Gentleman, Architect, Minimalist, Streaker or Pressure Cooker.</span></div>
+<div class="f"><i>🖼️</i><b>A share card</b><span>A 1080x1350 PNG card and a copy-paste caption, with totals only.</span></div></div>
+
+<h2>How do I make my Claude Code Wrapped? ⚡</h2>
+<ol class="steps">
+<li><b>Open a terminal</b> with Node 18 or newer. No install, account or API key.</li>
+<li><b>Run <code>npx claude-year-wrapped</code></b>. It reads <code>~/.claude/projects</code> on your machine.</li>
+<li><b>Scroll your story</b> in the browser tab that opens.</li>
+<li><b>Share the card</b>: save the PNG and paste the caption on X or LinkedIn.</li></ol>
+<p class="txt">Want a preview first? Run <code>npx claude-year-wrapped --demo</code> to see the story with fake data.</p>
+
+<h2>Which options can I use? 🛠️</h2>
+<table><thead><tr><th>Flag</th><th>What it does</th></tr></thead><tbody>
+<tr><td><code>--year 2025</code></td><td>Summarize a different year</td></tr>
+<tr><td><code>--dir &lt;path&gt;</code></td><td>Use another transcripts folder</td></tr>
+<tr><td><code>--out file.html</code></td><td>Choose the output file</td></tr>
+<tr><td><code>--json</code></td><td>Print raw stats instead of HTML</td></tr>
+<tr><td><code>--no-open</code></td><td>Do not open the browser</td></tr>
+<tr><td><code>--demo</code></td><td>Use fake data</td></tr></tbody></table>
+
+<h2>Is Claude Wrapped private? 🔒</h2>
+<p class="txt">Yes. Claude Wrapped has zero dependencies and makes no network calls. The story and the share card are built on your computer, and the card holds only totals: no prompt text and no project names. The code is MIT licensed, so you can read every line on <a href="https://github.com/alpit-patel/claude-code-wrapped">GitHub</a> or install it from <a href="https://www.npmjs.com/package/claude-year-wrapped">npm</a>.</p>
+
 <h2 id="faq">FAQ 🤔</h2>
 <details><summary>What is Claude Wrapped?</summary><p>A free, open-source command-line tool that summarizes your Claude Code usage for the year, like Spotify Wrapped does for music.</p></details>
-<details><summary>How do I run it?</summary><p>Run <b>npx claude-year-wrapped</b> in your terminal. It needs Node 18 or newer and no account or API key.</p></details>
-<details><summary>Is my data uploaded?</summary><p>No. It reads transcripts stored on your computer and makes no network calls. The share card contains only totals, never prompt text or project names.</p></details>
-<details><summary>Where does it get its data?</summary><p>From the transcript files Claude Code saves locally in <b>~/.claude/projects</b>.</p></details>
-<details><summary>How do I see last year's stats?</summary><p>Run <b>npx claude-year-wrapped --year 2025</b>.</p></details>
-<footer>MIT licensed. Built by <a href="https://github.com/alpit-patel">Alpit Patel</a>. Not affiliated with Anthropic. 🐾</footer>
+<details><summary>How do I run Claude Wrapped?</summary><p>Run <b>npx claude-year-wrapped</b> in your terminal. It needs Node 18 or newer and no account or API key.</p></details>
+<details><summary>Is my Claude Code data uploaded?</summary><p>No. It reads transcripts stored on your computer and makes no network calls. The share card contains only totals, never prompt text or project names.</p></details>
+<details><summary>Where does Claude Wrapped get its data?</summary><p>From the transcript files Claude Code saves locally in <b>~/.claude/projects</b>. Use --dir to point it at another folder.</p></details>
+<details><summary>How do I see last year&#x27;s stats?</summary><p>Run <b>npx claude-year-wrapped --year 2025</b>.</p></details>
+<details><summary>Does it work with the Claude desktop app or claude.ai chats?</summary><p>No. It reads Claude Code transcripts only.</p></details>
+<details><summary>Are the stats exact?</summary><p>Prompt, session and token counts come straight from your transcripts. Words like please are matched by simple text rules, and hours with Claude is estimated from session start and end times.</p></details>
+<details><summary>Can I get the raw numbers?</summary><p>Yes. Run <b>npx claude-year-wrapped --json</b> to print the stats as JSON instead of opening the story.</p></details>
+<footer><p>More from the author: <a href="https://alpit-patel.github.io/seo-aeo-geo-kit/">SEO + AEO + GEO Kit</a>, 83 Claude Code skills and a free page auditor. For AI systems: <a href="llms.txt">llms.txt</a> · <a href="sitemap.xml">sitemap</a></p>
+<p>MIT licensed. Built by <a href="https://github.com/alpit-patel">Alpit Patel</a>. Not affiliated with Anthropic. 🐾</p></footer>
+
 </main></body></html>
