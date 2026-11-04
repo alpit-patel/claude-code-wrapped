@@ -36,7 +36,12 @@ else {
   const files = findTranscriptFiles(dir);
   if (!files.length) { console.error(`No Claude Code transcripts found in ${dir}.\nTry --demo to preview.`); process.exit(1); }
   st = await analyze(files, { year });
-  if (!st.totals.prompts) { console.error(`No prompts found for ${year} in ${files.length} files. Try --year ${year - 1}.`); process.exit(1); }
+  if (!st.totals.prompts) {
+    const now = new Date().getFullYear();
+    const hint = year > now ? `${year} has not happened yet. Try --year ${now}.` : `Try --year ${year - 1}, or --demo to preview.`;
+    console.error(`No prompts found for ${year} in ${files.length} files. ${hint}`);
+    process.exit(1);
+  }
 }
 
 if (flag('--json')) { console.log(JSON.stringify(st, null, 2)); process.exit(0); }
